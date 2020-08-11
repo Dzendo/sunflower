@@ -20,11 +20,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/view_pager_fragment">
 
+    <!-- Стартовый фрагмент ( а он view_pager 2) -->
     <fragment
         android:id="@+id/view_pager_fragment"
         android:name="com.google.samples.apps.sunflower.HomeViewPagerFragment"
         tools:layout="@layout/fragment_view_pager">
 
+        <!-- переход и из фр.садика и из фр.магазина на экран описания растения (с добавлением) -->
+        <!-- используется анимация стандартная: вход выход назад -->
         <action
                 android:id="@+id/action_view_pager_fragment_to_plant_detail_fragment"
                 app:destination="@id/plant_detail_fragment"
@@ -34,6 +37,7 @@
                 app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
+    <!-- фрагмент описания конкретного растения (с/без добавления в садик) -->
     <fragment
         android:id="@+id/plant_detail_fragment"
         android:name="com.google.samples.apps.sunflower.PlantDetailFragment"
@@ -47,11 +51,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <!-- Аргументом приходит plantId растения которое надо высветить -->
         <argument
             android:name="plantId"
             app:argType="string" />
     </fragment>
 
+    <!-- Новый фрагмент - разбираться( должен вызываться из детализации растения) -->
+    <!-- похоже для него надо регистация (см ReadMe)-->
     <fragment
         android:id="@+id/gallery_fragment"
         android:name="com.google.samples.apps.sunflower.GalleryFragment"

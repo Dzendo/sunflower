@@ -23,7 +23,7 @@ import com.google.samples.apps.sunflower.PlantListFragment
 
 const val MY_GARDEN_PAGE_INDEX = 0
 const val PLANT_LIST_PAGE_INDEX = 1
-
+// https://habr.com/ru/post/447406/
 class SunflowerPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     /**

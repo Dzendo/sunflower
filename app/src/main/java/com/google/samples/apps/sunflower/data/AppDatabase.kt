@@ -27,33 +27,49 @@ import androidx.work.WorkManager
 import com.google.samples.apps.sunflower.utilities.DATABASE_NAME
 import com.google.samples.apps.sunflower.workers.SeedDatabaseWorker
 
+// Код будет практически одинаковым для любой Room базы данных,
+// поэтому вы можете использовать этот код в качестве шаблона
+
 /**
- * The Room database for this app
+ * The Room database for this app сразу двух таблиц в комнате
+ * База данных Room для этого приложения создается при вызове функции которая здесь fun buildDatabase описана
+ * Создание реальной Room для двух таблиц сразу: Кто-то вызывает companion функцию
+ * AppDatabase.getInstance она вызыват buildDatabase и этот говорит Room.databaseBuilder - будет реальная комната
+ *
+ * Есть в уроке 06.01 Android Kotlin Fundamentals
  */
+// Спроектировать в Room две таблицы версии 1 и Установите exportSchema на false, чтобы не держать схемы резервного копирования истории версий.
 @Database(entities = [GardenPlanting::class, Plant::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+@TypeConverters(Converters::class)                  // т.е в файле Converters.kt лежат конвертеры дат - две функции
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun gardenPlantingDao(): GardenPlantingDao
-    abstract fun plantDao(): PlantDao
+    abstract fun gardenPlantingDao(): GardenPlantingDao         // База данных должна знать о DAO
+    abstract fun plantDao(): PlantDao                           // База данных должна знать о DAO
 
     companion object {
 
         // For Singleton instantiation
+        //  Для одноэлементный экземпляр Volatile - НЕ кешировать
         @Volatile private var instance: AppDatabase? = null
+        // INSTANCE Переменная будет хранить ссылку на базу данных, когда один был создан.
+        // Это поможет вам избежать повторного открытия соединений с базой данных, что дорого.
 
+        // вызывается из InjectorUtils
+        // getInstance() метод с Context параметром, который понадобится построителю базы данных.
         fun getInstance(context: Context): AppDatabase {
-            return instance ?: synchronized(this) {
+            return instance ?: synchronized(this) {     // только один поток выполнения одновременно может войти в этот блок кода,
                 instance ?: buildDatabase(context).also { instance = it }
             }
         }
 
+        // Создайте и предварительно заполните базу данных.
         // Create and pre-populate the database. See this article for more details:
         // https://medium.com/google-developers/7-pro-tips-for-room-fbadea4bfbd1#4785
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-                    .addCallback(object : RoomDatabase.Callback() {
+                    .addCallback(object : RoomDatabase.Callback() {     // Интересно зачем нужен Callback ??? WorkManager
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
+                            // Запланируется работа для WorkManager
                             val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
                             WorkManager.getInstance(context).enqueue(request)
                         }

@@ -28,6 +28,7 @@ import com.google.samples.apps.sunflower.adapters.PLANT_LIST_PAGE_INDEX
 import com.google.samples.apps.sunflower.adapters.SunflowerPagerAdapter
 import com.google.samples.apps.sunflower.databinding.FragmentViewPagerBinding
 
+// фрагмент меняющий Садик/Магазин инструментом viewPager 2
 class HomeViewPagerFragment : Fragment() {
 
     override fun onCreateView(
@@ -35,6 +36,7 @@ class HomeViewPagerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Построен dataBinding пустой типа ViewBinding
         val binding = FragmentViewPagerBinding.inflate(inflater, container, false)
         val tabLayout = binding.tabs
         val viewPager = binding.viewPager
@@ -42,6 +44,7 @@ class HomeViewPagerFragment : Fragment() {
         viewPager.adapter = SunflowerPagerAdapter(this)
 
         // Set the icon and text for each tab
+        // Установите значок и текст для каждой вкладки
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.setIcon(getTabIcon(position))
             tab.text = getTabTitle(position)
@@ -51,7 +54,7 @@ class HomeViewPagerFragment : Fragment() {
 
         return binding.root
     }
-
+    // Константы объявлены в файле SunflowerPagerAdapter: 0  1
     private fun getTabIcon(position: Int): Int {
         return when (position) {
             MY_GARDEN_PAGE_INDEX -> R.drawable.garden_tab_selector
@@ -59,7 +62,7 @@ class HomeViewPagerFragment : Fragment() {
             else -> throw IndexOutOfBoundsException()
         }
     }
-
+    // возвращается слово подписи 0 - MY GARDEN или 1 - PLANT LIST
     private fun getTabTitle(position: Int): String? {
         return when (position) {
             MY_GARDEN_PAGE_INDEX -> getString(R.string.my_garden_title)
