@@ -30,6 +30,7 @@ import com.google.samples.apps.sunflower.viewmodels.PlantListViewModelFactory
 
 /**
  * Static methods used to inject classes needed for various Activities and Fragments.
+ * Статические методы используются для введения классов, необходимых для различных действий и фрагментов.
  */
 object InjectorUtils {
 

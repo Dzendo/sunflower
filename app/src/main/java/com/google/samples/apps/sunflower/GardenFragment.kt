@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.google.samples.apps.sunflower.adapters.GardenPlantingAdapter
@@ -56,10 +57,11 @@ class GardenFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: GardenPlantingAdapter, binding: FragmentGardenBinding) {
-        viewModel.plantAndGardenPlantings.observe(viewLifecycleOwner) { result ->
-            binding.hasPlantings = !result.isNullOrEmpty()
-            adapter.submitList(result)
-        }
+        viewModel.plantAndGardenPlantings.observe(viewLifecycleOwner,
+                Observer { result ->
+                    binding.hasPlantings = !result.isNullOrEmpty()
+                    adapter.submitList(result)
+                })
     }
 
     // TODO: convert to data binding if applicable
