@@ -24,6 +24,7 @@ plugins {
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
     buildFeatures {
         dataBinding = true
     }
@@ -58,7 +59,7 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
         freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
     }
-    buildToolsVersion '30.0.2'
+
 }
 
 dependencies {
