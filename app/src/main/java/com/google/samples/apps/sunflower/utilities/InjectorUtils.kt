@@ -45,7 +45,7 @@ object InjectorUtils {
     }
 
     fun provideGardenPlantingListViewModelFactory(
-        context: Context
+            context: Context,
     ): GardenPlantingListViewModelFactory {
         return GardenPlantingListViewModelFactory(getGardenPlantingRepository(context))
     }
@@ -55,8 +55,8 @@ object InjectorUtils {
     }
 
     fun providePlantDetailViewModelFactory(
-        context: Context,
-        plantId: String
+            context: Context,
+            plantId: String,
     ): PlantDetailViewModelFactory {
         return PlantDetailViewModelFactory(getPlantRepository(context),
                 getGardenPlantingRepository(context), plantId)

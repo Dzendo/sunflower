@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+
+
 package com.google.samples.apps.sunflower
 
 import android.os.Bundle
@@ -43,9 +45,9 @@ class GalleryFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         val binding = FragmentGalleryBinding.inflate(inflater, container, false)
         context ?: return binding.root
