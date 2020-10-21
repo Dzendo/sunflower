@@ -17,7 +17,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize' // 'kotlin-android-extensions' Deprecate
     id 'kotlin-kapt'
     id "androidx.navigation.safeargs.kotlin"
 }
