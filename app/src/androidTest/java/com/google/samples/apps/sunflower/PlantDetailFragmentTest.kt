@@ -31,6 +31,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+
+//import androidx.test.rule.ActivityTestRule
 import com.google.samples.apps.sunflower.utilities.chooser
 import com.google.samples.apps.sunflower.utilities.testPlant
 import org.hamcrest.CoreMatchers.allOf
@@ -45,7 +47,7 @@ class PlantDetailFragmentTest {
 
     @Rule
     @JvmField
-    val activityTestRule = ActivityTestRule(GardenActivity::class.java)
+    val activityTestRule = ActivityTestRule(GardenActivity::class.java, true)
 
     @Before
     fun jumpToPlantDetailFragment() {
