@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "sunflower"
+//rootProject.name = "sunflower"
 include ':app'
