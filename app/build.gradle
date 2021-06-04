@@ -25,6 +25,7 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
     defaultConfig {
         applicationId "com.google.samples.apps.sunflower"
