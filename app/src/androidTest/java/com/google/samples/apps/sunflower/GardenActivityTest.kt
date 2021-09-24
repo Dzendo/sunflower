@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.sunflower
 
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -33,6 +34,7 @@ class GardenActivityTest {
 
     private val hiltRule = HiltAndroidRule(this)
     private val activityTestRule = ActivityTestRule(GardenActivity::class.java)
+   // private val activityTestRule = ActivityScenario.launch(GardenActivity::class.java)
 
     @get:Rule
     val rule = RuleChain
