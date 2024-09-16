@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.sunflower.viewmodels
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -24,20 +25,37 @@ import com.google.samples.apps.sunflower.data.UnsplashPhoto
 import com.google.samples.apps.sunflower.data.UnsplashRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val repository: UnsplashRepository
 ) : ViewModel() {
-    private var currentQueryValue: String? = null
-    private var currentSearchResult: Flow<PagingData<UnsplashPhoto>>? = null
 
-    fun searchPictures(queryString: String): Flow<PagingData<UnsplashPhoto>> {
-        currentQueryValue = queryString
-        val newResult: Flow<PagingData<UnsplashPhoto>> =
-            repository.getSearchResultStream(queryString).cachedIn(viewModelScope)
-        currentSearchResult = newResult
-        return newResult
+    private var queryString: String? = savedStateHandle["plantName"]
+
+
+    private val _plantPictures = MutableStateFlow<PagingData<UnsplashPhoto>?>(null)
+    val plantPictures: Flow<PagingData<UnsplashPhoto>> get() = _plantPictures.filterNotNull()
+
+    init {
+        refreshData()
+    }
+
+
+    fun refreshData() {
+
+        viewModelScope.launch {
+            try {
+                _plantPictures.value = repository.getSearchResultStream(queryString ?: "").cachedIn(viewModelScope).first()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }
